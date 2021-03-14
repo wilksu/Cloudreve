@@ -80,7 +80,7 @@ _build() {
 release(){
   cd $REPO
   ## List of architectures and OS to test coss compilation.
-  SUPPORTED_OSARCH="linux/arm/arm-linux-gnueabihf-gcc/7"
+  SUPPORTED_OSARCH="linux/arm/arm-linux-musleabihf-gcc/7"
 
   echo "Release builds for OS/Arch/CC: ${SUPPORTED_OSARCH}"
   for each_osarch in ${SUPPORTED_OSARCH}; do
