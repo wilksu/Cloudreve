@@ -30,6 +30,13 @@ jobs:
         submodules: 'recursive'
     - run: |
         git fetch --prune --unshallow --tags
+        
+    - name: SSH connection to Actions
+      uses: P3TERX/ssh2actions@v1.0.0
+      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     - name: Get dependencies and build
       run: |
@@ -40,9 +47,6 @@ jobs:
         sudo apt-get -y install gcc-mingw-w64-x86-64
         sudo apt-get -y install gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
         sudo apt-get -y install gcc-aarch64-linux-gnu libc6-dev-arm64-cross
-        wget https://musl.cc/armv7l-linux-musleabihf-cross.tgz
-        tar xvf armv7l-linux-musleabihf-cross.tgz
-        export PATH=$PATH:~/armv7l-linux-musleabihf-cross/bin/
         chmod +x ./build.sh
         ./build.sh -r b
 
